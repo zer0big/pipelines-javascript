@@ -1,17 +1,16 @@
-'use strict';
+var http = require('http');
 
-const express = require('express');
+var server = http.createServer();
 
-// Constants
-const PORT = 3000;
-const HOST = '0.0.0.0';
-
-// App
-const app = express();
-app.get('/', (req, res) => {
-  res.send('Hello Node.js Sample!\n');
+server.addListener('request', function (request, response) {  
+    console.log('requested...');
+    response.writeHead(200, {'Content-Type' : 'text/plain'});
+    response.write('Hello nodejs');
+    response.end();
 });
 
-var port = process.env.PORT||PORT;
-app.listen(port);
-console.log(`Running on http://${HOST}:${PORT}`);
+server.addListener('connection', function(socket){  
+    console.log('connected...');
+});
+
+server.listen(8888);  
